@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block csslink %}
+<link href="/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+		<div id="guestbook">
+				{% if request.session.authuser is not None %}
+				<form action="/guestbook/add/" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="a" value="insert">
+					<table>
+						<tr>
+							<td>이름</td><td><input type="text" name="name" value="{{ request.session.authuser.name }}" readonly="true"></td>
+							<td>비밀번호</td><td><input type="password" name="password"></td>
+						</tr>
+						<tr>
+							<td colspan=4><textarea name="contents" id="content"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
+						</tr>
+					</table>
+				</form>
+				{% endif %}
+				<ul>
+					{% for gb in guestbook %}
+					<li>
+						<table style="border-collapse: collapse; border:4px solid #666; background-color:#ddd">
+							<tr>
+								<td>[{{ forloop.revcounter }}]</td>
+								<td>[{{ guestbook.count | sub:forloop.counter | add:1 }}]</td>
+								<td>{{ gb.name }} : {{ gb.name | length }}</td>
+								<td>{{ gb.reg_date | date:'Y-m-d h:i:s' }}</td>
+								<td width="40">
+								{% if request.session.authuser.name == gb.name %}
+								<a href="/guestbook/deleteform/{{ gb.id }}"}>삭제</a>
+								{% endif %}
+								</td>
+							</tr>
+							<tr>
+								<td colspan=4>
+								{{ gb.contents | linebreaksbr }}
+								</td>
+								<td></td>
+							</tr>
+						</table>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+{% endblock %}

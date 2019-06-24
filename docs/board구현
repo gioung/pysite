@@ -1,0 +1,20 @@
+1. limit 처리
+    start = (page-1)*pagesize
+    Board.objects.all().order_by('-refdate')[start:start+pagesize]
+
+2. insert
+    board = Board()
+    board.title = ',,,'
+    ....
+    .... setting해주기
+    board.user_id = -------
+    board.save()
+
+3. Increase hit
+
+    board = Board......
+    board.hit = board.hit + 1
+    board.save
+
+4. TotalCount
+    Board.objects.count()
