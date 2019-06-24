@@ -15,17 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import(handler404, handler500)
+# from django.conf.urls import(handler404, handler500)
 
 import main.views as main_views
 import user.views as user_views
 import guestbook.views as guestbook_views
 import board.views as board_views
 
-handler404 = 'error.views.page_not_found'
-handler500 = 'error.views.server_error'
+
+
 
 urlpatterns = [
+
     path('', main_views.index),
 
     path('user/join/', user_views.join),
@@ -51,3 +52,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 ]
+
+
+# handler404 = 'error.views.page_not_found'
+# handler500 = 'error.views.server_error'

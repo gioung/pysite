@@ -65,6 +65,8 @@ def view(request, id):
     data = {
         'board': board
     }
+    board.hit = board.hit + 1
+    board.save()
     return render(request, 'board/view.html', data)
 
 
